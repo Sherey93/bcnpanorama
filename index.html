@@ -171,11 +171,22 @@
         .social-links a { margin: 0 10px; font-weight: bold; }
         .social-links a:hover { color: var(--accent-gold); }
 
-        /* --- RESPONSIVE --- */
+        /* --- MOBILE RESPONSIVE (关键修改区) --- */
         @media (max-width: 768px) {
             h1 { font-size: 2.2rem; }
             .info-grid { grid-template-columns: 1fr; }
-            .hero { height: 85vh; }
+            
+            /* 手机端首图高度改小，以显示更多图片宽度 */
+            .hero { 
+                height: 60vh; 
+                min-height: 400px;
+            }
+            /* 确保背景居中 */
+            .hero::before {
+                background-position: center center;
+            }
+            
+            section { padding: 40px 0; }
         }
     </style>
 </head>
@@ -279,6 +290,7 @@
 
 </body>
 </html>
+
 
 
 
