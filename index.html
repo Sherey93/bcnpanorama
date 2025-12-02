@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PANORAMA | Dining with a View</title>
+    <title>PANORAMA | Restaurante & Vistas</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         /* --- 基础设置 --- */
@@ -104,7 +104,6 @@
         /* --- Hero Section --- */
         .hero {
             height: 100vh;
-            /* 替换为一张更有全景感的图片 */
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1544148103-0773bf10d330?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
             background-size: cover;
             background-position: center;
@@ -213,44 +212,44 @@
             <div class="logo">PANORAMA</div>
             <nav>
                 <ul>
-                    <li><a href="#" data-lang-key="nav_home">首页</a></li>
-                    <li><a href="#" data-lang-key="nav_concept">理念</a></li>
-                    <li><a href="#" data-lang-key="nav_menu">菜单</a></li>
-                    <li><a href="#" data-lang-key="nav_private">私享空间</a></li>
-                    <li><a href="#" data-lang-key="nav_contact">联系</a></li>
+                    <li><a href="#" data-lang-key="nav_home">Inicio</a></li>
+                    <li><a href="#" data-lang-key="nav_concept">Concepto</a></li>
+                    <li><a href="#" data-lang-key="nav_menu">Carta</a></li>
+                    <li><a href="#" data-lang-key="nav_private">Salones Privados</a></li>
+                    <li><a href="#" data-lang-key="nav_contact">Contacto</a></li>
                 </ul>
             </nav>
         </div>
         
         <div class="header-right">
-            <!-- 语言选择器 -->
+            <!-- 语言选择器 (默认选 Esp) -->
             <select id="language-selector" class="lang-selector" onchange="changeLanguage()">
-                <option value="zh">中文</option>
-                <option value="es">Español</option>
+                <option value="es" selected>Español</option>
                 <option value="ca">Català</option>
                 <option value="en">English</option>
+                <option value="zh">中文</option>
             </select>
-            <a href="#" class="btn-reserve" data-lang-key="btn_reserve">立即预订</a>
+            <a href="#" class="btn-reserve" data-lang-key="btn_reserve">Reservar</a>
         </div>
     </header>
 
     <!-- 首屏 Hero -->
     <section class="hero">
         <div class="hero-content">
-            <h1 data-lang-key="hero_title">Beyond the Horizon</h1>
-            <p data-lang-key="hero_subtitle">全景视野 · 极致风味 · 永恒经典</p>
+            <h1 data-lang-key="hero_title">Más Allá del Horizonte</h1>
+            <p data-lang-key="hero_subtitle">Vistas Panorámicas · Sabores Exquisitos · Clásicos Eternos</p>
         </div>
     </section>
 
     <!-- 品牌介绍 -->
     <section class="intro">
-        <h2 data-lang-key="intro_title">我们的哲学</h2>
+        <h2 data-lang-key="intro_title">Nuestra Filosofía</h2>
         <div class="divider"></div>
         <br>
         <p data-lang-key="intro_text">
-            PANORAMA 坐落于城市之巅，不仅是一处餐厅，更是一段关于视野与味觉的旅程。
-            在这里，我们将加泰罗尼亚的经典烹饪艺术与现代广阔视野完美融合。
-            我们致敬传统，坚持使用最地道的食材，为您呈献跨越时空的味蕾盛宴。
+            Ubicado en la cima de la ciudad, PANORAMA no es solo un restaurante, es un viaje de vistas y sabores. 
+            Aquí fusionamos el arte culinario clásico catalán con una perspectiva moderna. 
+            Respetamos la tradición y utilizamos ingredientes locales para ofrecerle una fiesta gastronómica.
         </p>
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Latte_art_3.jpg/640px-Latte_art_3.jpg" alt="Signature" style="width: 100px; opacity: 0.6; margin-top:1rem; filter: grayscale(100%);">
     </section>
@@ -259,18 +258,18 @@
     <section class="grid-section">
         <div class="grid-img" style="background-image: url('https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');"></div>
         <div class="grid-text">
-            <h3 data-lang-key="section1_title">经典与创新</h3>
-            <p data-lang-key="section1_text">我们的菜单灵感源自地中海的丰饶。从慢火炖煮的传统肉类，到清晨捕获的鲜活海鲜，每一道菜都是对食材的礼赞。如同经典的 7 Portes，我们也拥有属于自己的“名菜录”。</p>
-            <a href="#" class="menu-link" data-lang-key="link_view_menu">查看完整菜单 &rarr;</a>
+            <h3 data-lang-key="section1_title">Tradición e Innovación</h3>
+            <p data-lang-key="section1_text">Nuestra carta se inspira en la riqueza del Mediterráneo. Desde guisos tradicionales a fuego lento hasta mariscos frescos del día. Como el clásico 7 Portes, tenemos nuestro propio recetario de platos ilustres.</p>
+            <a href="#" class="menu-link" data-lang-key="link_view_menu">Ver la Carta Completa &rarr;</a>
         </div>
     </section>
 
     <!-- 图文交错展示 2 -->
     <section class="grid-section">
         <div class="grid-text" style="background-color: #f9f9f9;">
-            <h3 data-lang-key="section2_title">全景宴会厅</h3>
-            <p data-lang-key="section2_text">无论是私人晚宴还是商务聚会，PANORAMA 提供的不仅仅是私密的空间，更是无可比拟的窗外景致。历史与当下在杯盏间交汇。</p>
-            <a href="#" class="menu-link" data-lang-key="link_private_dining">预订包间 &rarr;</a>
+            <h3 data-lang-key="section2_title">Comedor Panorámico</h3>
+            <p data-lang-key="section2_text">Ya sea para una cena privada o una reunión de negocios, PANORAMA ofrece no solo privacidad, sino unas vistas inigualables. La historia y el presente se encuentran en cada copa.</p>
+            <a href="#" class="menu-link" data-lang-key="link_private_dining">Reservar Salón &rarr;</a>
         </div>
         <div class="grid-img" style="background-image: url('https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');"></div>
     </section>
@@ -279,19 +278,19 @@
     <footer>
         <div>
             <h4>PANORAMA</h4>
-            <p data-lang-key="footer_tagline">定义美食的新视野。</p>
+            <p data-lang-key="footer_tagline">Definiendo una nueva visión gastronómica.</p>
         </div>
         <div>
-            <h4 data-lang-key="footer_contact_title">联系我们</h4>
+            <h4 data-lang-key="footer_contact_title">Contacto</h4>
             <p>Avenida del Mar, 108, Barcelona</p>
             <p>Tel: +34 93 123 45 67</p>
             <p>Email: info@panorama-rest.com</p>
         </div>
         <div>
-            <h4 data-lang-key="footer_hours_title">营业时间</h4>
-            <p data-lang-key="footer_lunch">午餐: 13:00 - 16:00</p>
-            <p data-lang-key="footer_dinner">晚餐: 20:00 - 23:30</p>
-            <p data-lang-key="footer_open">全年无休</p>
+            <h4 data-lang-key="footer_hours_title">Horario</h4>
+            <p data-lang-key="footer_lunch">Almuerzo: 13:00 - 16:00</p>
+            <p data-lang-key="footer_dinner">Cena: 20:00 - 23:30</p>
+            <p data-lang-key="footer_open">Abierto todos los días</p>
         </div>
     </footer>
 
@@ -306,7 +305,7 @@
                 nav_private: "私享空间",
                 nav_contact: "联系",
                 btn_reserve: "立即预订",
-                hero_title: "Beyond the Horizon", // 保持英文显得更高级，或改为 "超越地平线"
+                hero_title: "Beyond the Horizon",
                 hero_subtitle: "全景视野 · 极致风味 · 永恒经典",
                 intro_title: "我们的哲学",
                 intro_text: "PANORAMA 坐落于城市之巅，不仅是一处餐厅，更是一段关于视野与味觉的旅程。在这里，我们将加泰罗尼亚的经典烹饪艺术与现代广阔视野完美融合。我们致敬传统，坚持使用最地道的食材，为您呈献跨越时空的味蕾盛宴。",
@@ -399,7 +398,7 @@
 
         // 2. 切换语言函数
         function changeLanguage() {
-            // 获取下拉菜单选中的值 (zh, es, ca, en)
+            // 获取下拉菜单选中的值
             const lang = document.getElementById('language-selector').value;
             
             // 找到页面上所有带有 data-lang-key 属性的元素
@@ -413,8 +412,8 @@
                 }
             });
 
-            // 更新页面的 lang 属性（利于浏览器翻译插件和SEO）
-            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+            // 更新页面的 lang 属性
+            document.documentElement.lang = lang;
         }
     </script>
 
