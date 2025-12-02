@@ -8,19 +8,21 @@
     <style>
         /* --- 基础设置 --- */
         :root {
-            --primary-color: #1B2631; /* 深海军蓝 */
-            --accent-color: #D4AF37; /* 香槟金 */
-            --bg-light: #FDFBF7; /* 米白 */
+            --primary-color: #1B2631;
+            --accent-color: #D4AF37;
+            --bg-light: #FDFBF7;
             --text-dark: #333333;
             --text-light: #ffffff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Lato', "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-family: 'Lato', sans-serif;
             color: var(--text-dark);
             background-color: var(--bg-light);
             line-height: 1.6;
+            /* 防止 Google Translate 顶部推挤页面 */
+            top: 0 !important; 
         }
 
         h1, h2, h3, h4 {
@@ -30,6 +32,20 @@
 
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         ul { list-style: none; }
+
+        /* --- 隐藏 Google Translate 原生组件 (关键) --- */
+        .goog-te-banner-frame.skiptranslate { display: none !important; } 
+        body { position: static !important; top: 0px !important; } 
+        #google_translate_element { display: none; } /* 隐藏原生下拉框 */
+        .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
+        
+        /* 去除 Google 弹窗提示 */
+        .goog-tooltip {
+            display: none !important;
+        }
+        .goog-tooltip:hover {
+            display: none !important;
+        }
 
         /* --- 导航栏 --- */
         header {
@@ -64,14 +80,13 @@
         }
         nav a:hover { color: var(--accent-color); }
 
-        /* --- 语言切换器与预订按钮 --- */
+        /* --- 右侧功能区 --- */
         .header-right {
             display: flex;
             align-items: center;
             gap: 1.5rem;
         }
 
-        /* 语言下拉菜单样式 */
         .lang-selector {
             background: transparent;
             color: #ccc;
@@ -101,7 +116,7 @@
             color: var(--primary-color);
         }
 
-        /* --- Hero Section --- */
+        /* --- 页面内容 --- */
         .hero {
             height: 100vh;
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1544148103-0773bf10d330?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
@@ -126,7 +141,6 @@
             font-weight: 300;
         }
 
-        /* --- 通用 Section --- */
         .intro {
             padding: 5rem 10%;
             text-align: center;
@@ -150,7 +164,6 @@
             margin: 0 auto;
         }
 
-        /* --- Grid Section --- */
         .grid-section {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -179,7 +192,6 @@
             cursor: pointer;
         }
 
-        /* --- Footer --- */
         footer {
             background-color: var(--primary-color);
             color: #bbb;
@@ -191,7 +203,6 @@
             border-top: 4px solid var(--accent-color);
         }
         footer h4 { color: var(--accent-color); margin-bottom: 1.5rem; letter-spacing: 1px; }
-        footer p { margin-bottom: 0.5rem; }
 
         @media (max-width: 900px) {
             header { padding: 1rem; flex-direction: column; gap: 1rem; }
@@ -212,41 +223,45 @@
             <div class="logo">PANORAMA</div>
             <nav>
                 <ul>
-                    <li><a href="#" data-lang-key="nav_home">Inicio</a></li>
-                    <li><a href="#" data-lang-key="nav_concept">Concepto</a></li>
-                    <li><a href="#" data-lang-key="nav_menu">Carta</a></li>
-                    <li><a href="#" data-lang-key="nav_private">Salones Privados</a></li>
-                    <li><a href="#" data-lang-key="nav_contact">Contacto</a></li>
+                    <!-- 注意：这里只需要写一种语言（西班牙语） -->
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Concepto</a></li>
+                    <li><a href="#">Carta</a></li>
+                    <li><a href="#">Salones</a></li>
+                    <li><a href="#">Contacto</a></li>
                 </ul>
             </nav>
         </div>
         
         <div class="header-right">
-            <!-- 语言选择器 (默认选 Esp) -->
-            <select id="language-selector" class="lang-selector" onchange="changeLanguage()">
-                <option value="es" selected>Español</option>
+            <!-- 自定义语言选择器 -->
+            <select id="custom-lang-selector" class="lang-selector" onchange="triggerGoogleTranslate()">
+                <option value="es">Español</option>
                 <option value="ca">Català</option>
                 <option value="en">English</option>
-                <option value="zh">中文</option>
+                <option value="zh-CN">中文</option>
             </select>
-            <a href="#" class="btn-reserve" data-lang-key="btn_reserve">Reservar</a>
+            <a href="#" class="btn-reserve">Reservar</a>
         </div>
     </header>
+
+    <!-- Google 翻译组件（隐藏） -->
+    <div id="google_translate_element"></div>
 
     <!-- 首屏 Hero -->
     <section class="hero">
         <div class="hero-content">
-            <h1 data-lang-key="hero_title">Más Allá del Horizonte</h1>
-            <p data-lang-key="hero_subtitle">Vistas Panorámicas · Sabores Exquisitos · Clásicos Eternos</p>
+            <h1>Más Allá del Horizonte</h1>
+            <p>Vistas Panorámicas · Sabores Exquisitos · Clásicos Eternos</p>
         </div>
     </section>
 
     <!-- 品牌介绍 -->
     <section class="intro">
-        <h2 data-lang-key="intro_title">Nuestra Filosofía</h2>
+        <h2>Nuestra Filosofía</h2>
         <div class="divider"></div>
         <br>
-        <p data-lang-key="intro_text">
+        <p>
             Ubicado en la cima de la ciudad, PANORAMA no es solo un restaurante, es un viaje de vistas y sabores. 
             Aquí fusionamos el arte culinario clásico catalán con una perspectiva moderna. 
             Respetamos la tradición y utilizamos ingredientes locales para ofrecerle una fiesta gastronómica.
@@ -258,18 +273,18 @@
     <section class="grid-section">
         <div class="grid-img" style="background-image: url('https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');"></div>
         <div class="grid-text">
-            <h3 data-lang-key="section1_title">Tradición e Innovación</h3>
-            <p data-lang-key="section1_text">Nuestra carta se inspira en la riqueza del Mediterráneo. Desde guisos tradicionales a fuego lento hasta mariscos frescos del día. Como el clásico 7 Portes, tenemos nuestro propio recetario de platos ilustres.</p>
-            <a href="#" class="menu-link" data-lang-key="link_view_menu">Ver la Carta Completa &rarr;</a>
+            <h3>Tradición e Innovación</h3>
+            <p>Nuestra carta se inspira en la riqueza del Mediterráneo. Desde guisos tradicionales a fuego lento hasta mariscos frescos del día. Como el clásico 7 Portes, tenemos nuestro propio recetario de platos ilustres.</p>
+            <a href="#" class="menu-link">Ver la Carta Completa &rarr;</a>
         </div>
     </section>
 
     <!-- 图文交错展示 2 -->
     <section class="grid-section">
         <div class="grid-text" style="background-color: #f9f9f9;">
-            <h3 data-lang-key="section2_title">Comedor Panorámico</h3>
-            <p data-lang-key="section2_text">Ya sea para una cena privada o una reunión de negocios, PANORAMA ofrece no solo privacidad, sino unas vistas inigualables. La historia y el presente se encuentran en cada copa.</p>
-            <a href="#" class="menu-link" data-lang-key="link_private_dining">Reservar Salón &rarr;</a>
+            <h3>Comedor Panorámico</h3>
+            <p>Ya sea para una cena privada o una reunión de negocios, PANORAMA ofrece no solo privacidad, sino unas vistas inigualables. La historia y el presente se encuentran en cada copa.</p>
+            <a href="#" class="menu-link">Reservar Salón &rarr;</a>
         </div>
         <div class="grid-img" style="background-image: url('https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');"></div>
     </section>
@@ -278,142 +293,49 @@
     <footer>
         <div>
             <h4>PANORAMA</h4>
-            <p data-lang-key="footer_tagline">Definiendo una nueva visión gastronómica.</p>
+            <p>Definiendo una nueva visión gastronómica.</p>
         </div>
         <div>
-            <h4 data-lang-key="footer_contact_title">Contacto</h4>
+            <h4>Contacto</h4>
             <p>Avenida del Mar, 108, Barcelona</p>
             <p>Tel: +34 93 123 45 67</p>
             <p>Email: info@panorama-rest.com</p>
         </div>
         <div>
-            <h4 data-lang-key="footer_hours_title">Horario</h4>
-            <p data-lang-key="footer_lunch">Almuerzo: 13:00 - 16:00</p>
-            <p data-lang-key="footer_dinner">Cena: 20:00 - 23:30</p>
-            <p data-lang-key="footer_open">Abierto todos los días</p>
+            <h4>Horario</h4>
+            <p>Almuerzo: 13:00 - 16:00</p>
+            <p>Cena: 20:00 - 23:30</p>
+            <p>Abierto todos los días</p>
         </div>
     </footer>
 
-    <!-- JavaScript 语言切换逻辑 -->
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'es', // 网站默认语言是西班牙语
+                includedLanguages: 'es,ca,en,zh-CN', // 只允许翻译成这几种
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- 自定义触发逻辑 -->
     <script>
-        // 1. 翻译字典
-        const translations = {
-            zh: {
-                nav_home: "首页",
-                nav_concept: "理念",
-                nav_menu: "菜单",
-                nav_private: "私享空间",
-                nav_contact: "联系",
-                btn_reserve: "立即预订",
-                hero_title: "Beyond the Horizon",
-                hero_subtitle: "全景视野 · 极致风味 · 永恒经典",
-                intro_title: "我们的哲学",
-                intro_text: "PANORAMA 坐落于城市之巅，不仅是一处餐厅，更是一段关于视野与味觉的旅程。在这里，我们将加泰罗尼亚的经典烹饪艺术与现代广阔视野完美融合。我们致敬传统，坚持使用最地道的食材，为您呈献跨越时空的味蕾盛宴。",
-                section1_title: "经典与创新",
-                section1_text: "我们的菜单灵感源自地中海的丰饶。从慢火炖煮的传统肉类，到清晨捕获的鲜活海鲜，每一道菜都是对食材的礼赞。如同经典的 7 Portes，我们也拥有属于自己的“名菜录”。",
-                link_view_menu: "查看完整菜单 →",
-                section2_title: "全景宴会厅",
-                section2_text: "无论是私人晚宴还是商务聚会，PANORAMA 提供的不仅仅是私密的空间，更是无可比拟的窗外景致。历史与当下在杯盏间交汇。",
-                link_private_dining: "预订包间 →",
-                footer_tagline: "定义美食的新视野。",
-                footer_contact_title: "联系我们",
-                footer_hours_title: "营业时间",
-                footer_lunch: "午餐: 13:00 - 16:00",
-                footer_dinner: "晚餐: 20:00 - 23:30",
-                footer_open: "全年无休"
-            },
-            es: {
-                nav_home: "Inicio",
-                nav_concept: "Concepto",
-                nav_menu: "Carta",
-                nav_private: "Salones Privados",
-                nav_contact: "Contacto",
-                btn_reserve: "Reservar",
-                hero_title: "Más Allá del Horizonte",
-                hero_subtitle: "Vistas Panorámicas · Sabores Exquisitos · Clásicos Eternos",
-                intro_title: "Nuestra Filosofía",
-                intro_text: "Ubicado en la cima de la ciudad, PANORAMA no es solo un restaurante, es un viaje de vistas y sabores. Aquí fusionamos el arte culinario clásico catalán con una perspectiva moderna. Respetamos la tradición y utilizamos ingredientes locales para ofrecerle una fiesta gastronómica.",
-                section1_title: "Tradición e Innovación",
-                section1_text: "Nuestra carta se inspira en la riqueza del Mediterráneo. Desde guisos tradicionales a fuego lento hasta mariscos frescos del día. Como el clásico 7 Portes, tenemos nuestro propio recetario de platos ilustres.",
-                link_view_menu: "Ver la Carta Completa →",
-                section2_title: "Comedor Panorámico",
-                section2_text: "Ya sea para una cena privada o una reunión de negocios, PANORAMA ofrece no solo privacidad, sino unas vistas inigualables. La historia y el presente se encuentran en cada copa.",
-                link_private_dining: "Reservar Salón →",
-                footer_tagline: "Definiendo una nueva visión gastronómica.",
-                footer_contact_title: "Contacto",
-                footer_hours_title: "Horario",
-                footer_lunch: "Almuerzo: 13:00 - 16:00",
-                footer_dinner: "Cena: 20:00 - 23:30",
-                footer_open: "Abierto todos los días"
-            },
-            ca: {
-                nav_home: "Inici",
-                nav_concept: "Concepte",
-                nav_menu: "Carta",
-                nav_private: "Salons Privats",
-                nav_contact: "Contacte",
-                btn_reserve: "Reservar",
-                hero_title: "Més Enllà de l'Horitzó",
-                hero_subtitle: "Vistes Panoràmiques · Sabors Exquisits · Clàssics Eterns",
-                intro_title: "La Nostra Filosofia",
-                intro_text: "Situat al cim de la ciutat, PANORAMA no és només un restaurant, és un viatge de vistes i sabors. Aquí fusionem l'art culinari clàssic català amb una perspectiva moderna. Respectem la tradició i utilitzem ingredients de proximitat per oferir-vos una festa gastronòmica.",
-                section1_title: "Tradició i Innovació",
-                section1_text: "La nostra carta s'inspira en la riquesa del Mediterrani. Des de guisats tradicionals a foc lent fins a mariscs frescos del dia. Com el clàssic 7 Portes, tenim el nostre propi receptari de plats il·lustres.",
-                link_view_menu: "Veure la Carta Completa →",
-                section2_title: "Menjador Panoràmic",
-                section2_text: "Ja sigui per a un sopar privat o una reunió de negocis, PANORAMA ofereix no només privacitat, sinó unes vistes inigualables. La història i el present es troben en cada copa.",
-                link_private_dining: "Reservar Saló →",
-                footer_tagline: "Definint una nova visió gastronòmica.",
-                footer_contact_title: "Contacte",
-                footer_hours_title: "Horari",
-                footer_lunch: "Dinar: 13:00 - 16:00",
-                footer_dinner: "Sopar: 20:00 - 23:30",
-                footer_open: "Obert tots els dies"
-            },
-            en: {
-                nav_home: "Home",
-                nav_concept: "Concept",
-                nav_menu: "Menu",
-                nav_private: "Private Dining",
-                nav_contact: "Contact",
-                btn_reserve: "Reserve Now",
-                hero_title: "Beyond the Horizon",
-                hero_subtitle: "Panoramic Views · Exquisite Flavors · Timeless Classics",
-                intro_title: "Our Philosophy",
-                intro_text: "Located at the peak of the city, PANORAMA is more than a restaurant; it is a journey of sight and taste. Here, we fuse classic Catalan culinary art with a modern perspective. We honor tradition using the finest local ingredients to present a timeless gastronomic feast.",
-                section1_title: "Tradition & Innovation",
-                section1_text: "Our menu is inspired by the richness of the Mediterranean. From slow-cooked traditional stews to fresh seafood caught daily. Like the classic 7 Portes, we have our own registry of signature dishes.",
-                link_view_menu: "View Full Menu →",
-                section2_title: "Panoramic Dining Hall",
-                section2_text: "Whether for a private dinner or a business gathering, PANORAMA offers not just privacy, but unmatched views. History and the present meet in every glass.",
-                link_private_dining: "Book Private Room →",
-                footer_tagline: "Defining the view of gastronomy.",
-                footer_contact_title: "Contact Us",
-                footer_hours_title: "Opening Hours",
-                footer_lunch: "Lunch: 13:00 - 16:00",
-                footer_dinner: "Dinner: 20:00 - 23:30",
-                footer_open: "Open 365 days a year"
+        function triggerGoogleTranslate() {
+            // 获取我们自定义下拉框的值
+            var selectVal = document.getElementById("custom-lang-selector").value;
+            
+            // 找到 Google 翻译生成的隐藏下拉框
+            var googleSelect = document.querySelector(".goog-te-combo");
+            
+            if (googleSelect) {
+                googleSelect.value = selectVal;
+                // 手动触发 change 事件，通知 Google 开始翻译
+                googleSelect.dispatchEvent(new Event("change"));
             }
-        };
-
-        // 2. 切换语言函数
-        function changeLanguage() {
-            // 获取下拉菜单选中的值
-            const lang = document.getElementById('language-selector').value;
-            
-            // 找到页面上所有带有 data-lang-key 属性的元素
-            const elements = document.querySelectorAll('[data-lang-key]');
-            
-            // 遍历并更新文本
-            elements.forEach(element => {
-                const key = element.getAttribute('data-lang-key');
-                if (translations[lang] && translations[lang][key]) {
-                    element.innerText = translations[lang][key];
-                }
-            });
-
-            // 更新页面的 lang 属性
-            document.documentElement.lang = lang;
         }
     </script>
 
