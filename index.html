@@ -21,8 +21,7 @@
             color: var(--text-dark);
             background-color: var(--bg-light);
             line-height: 1.6;
-            /* 防止 Google Translate 顶部推挤页面 */
-            top: 0 !important; 
+            top: 0 !important;
         }
 
         h1, h2, h3, h4 {
@@ -33,19 +32,13 @@
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         ul { list-style: none; }
 
-        /* --- 隐藏 Google Translate 原生组件 (关键) --- */
-        .goog-te-banner-frame.skiptranslate { display: none !important; } 
-        body { position: static !important; top: 0px !important; } 
-        #google_translate_element { display: none; } /* 隐藏原生下拉框 */
+        /* --- 彻底隐藏 Google 顶部横幅 --- */
+        .goog-te-banner-frame.skiptranslate { display: none !important; }
+        body { position: static !important; top: 0px !important; }
+        #google_translate_element { display: none !important; } /* 隐藏原生组件 */
+        .goog-tooltip { display: none !important; }
+        .goog-tooltip:hover { display: none !important; }
         .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
-        
-        /* 去除 Google 弹窗提示 */
-        .goog-tooltip {
-            display: none !important;
-        }
-        .goog-tooltip:hover {
-            display: none !important;
-        }
 
         /* --- 导航栏 --- */
         header {
@@ -80,13 +73,9 @@
         }
         nav a:hover { color: var(--accent-color); }
 
-        /* --- 右侧功能区 --- */
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
+        .header-right { display: flex; align-items: center; gap: 1.5rem; }
 
+        /* 自定义下拉菜单样式 */
         .lang-selector {
             background: transparent;
             color: #ccc;
@@ -223,7 +212,6 @@
             <div class="logo">PANORAMA</div>
             <nav>
                 <ul>
-                    <!-- 注意：这里只需要写一种语言（西班牙语） -->
                     <li><a href="#">Inicio</a></li>
                     <li><a href="#">Concepto</a></li>
                     <li><a href="#">Carta</a></li>
@@ -234,8 +222,8 @@
         </div>
         
         <div class="header-right">
-            <!-- 自定义语言选择器 -->
-            <select id="custom-lang-selector" class="lang-selector" onchange="triggerGoogleTranslate()">
+            <!-- 自定义下拉菜单：利用 Cookie 触发翻译 -->
+            <select id="custom-lang-selector" class="lang-selector" onchange="translatePage(this.value)">
                 <option value="es">Español</option>
                 <option value="ca">Català</option>
                 <option value="en">English</option>
@@ -245,7 +233,6 @@
         </div>
     </header>
 
-    <!-- Google 翻译组件（隐藏） -->
     <div id="google_translate_element"></div>
 
     <!-- 首屏 Hero -->
@@ -309,32 +296,50 @@
         </div>
     </footer>
 
-    <!-- Google Translate Script -->
+    <!-- Google Translate Script (必须包含) -->
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
-                pageLanguage: 'es', // 网站默认语言是西班牙语
-                includedLanguages: 'es,ca,en,zh-CN', // 只允许翻译成这几种
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                pageLanguage: 'es', 
+                includedLanguages: 'es,ca,en,zh-CN',
                 autoDisplay: false
             }, 'google_translate_element');
         }
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-    <!-- 自定义触发逻辑 -->
+    <!-- 强力 Cookie 翻译脚本 -->
     <script>
-        function triggerGoogleTranslate() {
-            // 获取我们自定义下拉框的值
-            var selectVal = document.getElementById("custom-lang-selector").value;
+        function translatePage(targetLang) {
+            // 设置 Google Translate 特定的 cookie
+            // 格式: /来源语言/目标语言
+            document.cookie = "googtrans=/es/" + targetLang + "; path=/";
             
-            // 找到 Google 翻译生成的隐藏下拉框
-            var googleSelect = document.querySelector(".goog-te-combo");
+            // 重新加载页面以应用翻译
+            location.reload();
+        }
+
+        // 页面加载时，确保下拉菜单显示当前选中的语言
+        window.onload = function() {
+            var cookies = document.cookie.split(';');
+            var currentLang = 'es'; // 默认
             
-            if (googleSelect) {
-                googleSelect.value = selectVal;
-                // 手动触发 change 事件，通知 Google 开始翻译
-                googleSelect.dispatchEvent(new Event("change"));
+            for(var i = 0; i < cookies.length; i++) {
+                var c = cookies[i].trim();
+                if (c.indexOf("googtrans=") == 0) {
+                    // 解析 cookie 里的语言代码
+                    var val = c.substring("googtrans=".length, c.length);
+                    // 格式通常是 /es/en，我们取最后两个字符
+                    var parts = val.split('/');
+                    if(parts.length > 0) {
+                        currentLang = parts[parts.length - 1]; 
+                    }
+                }
+            }
+            
+            var select = document.getElementById("custom-lang-selector");
+            if(select) {
+                select.value = currentLang;
             }
         }
     </script>
