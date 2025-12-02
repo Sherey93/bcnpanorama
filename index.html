@@ -24,20 +24,15 @@
             top: 0 !important;
         }
 
-        h1, h2, h3, h4 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-        }
-
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         ul { list-style: none; }
 
-        /* --- 彻底隐藏 Google 顶部横幅 --- */
+        /* --- 隐藏 Google 顶部横幅 --- */
         .goog-te-banner-frame.skiptranslate { display: none !important; }
         body { position: static !important; top: 0px !important; }
-        #google_translate_element { display: none !important; } /* 隐藏原生组件 */
+        #google_translate_element { display: none !important; }
         .goog-tooltip { display: none !important; }
-        .goog-tooltip:hover { display: none !important; }
         .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
 
         /* --- 导航栏 --- */
@@ -56,26 +51,14 @@
         }
 
         .header-left { display: flex; align-items: center; gap: 2rem; }
-
-        .logo {
-            font-size: 1.8rem;
-            color: var(--text-light);
-            letter-spacing: 2px;
-            font-family: 'Playfair Display', serif;
-        }
+        .logo { font-size: 1.8rem; color: var(--text-light); letter-spacing: 2px; font-family: 'Playfair Display', serif; }
 
         nav ul { display: flex; gap: 1.5rem; }
-        nav a {
-            color: rgba(255,255,255,0.8);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        nav a { color: rgba(255,255,255,0.8); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
         nav a:hover { color: var(--accent-color); }
 
         .header-right { display: flex; align-items: center; gap: 1.5rem; }
 
-        /* 自定义下拉菜单样式 */
         .lang-selector {
             background: transparent;
             color: #ccc;
@@ -86,10 +69,7 @@
             cursor: pointer;
             outline: none;
         }
-        .lang-selector option {
-            background-color: var(--primary-color);
-            color: #fff;
-        }
+        .lang-selector option { background-color: var(--primary-color); color: #fff; }
 
         .btn-reserve {
             border: 1px solid var(--accent-color);
@@ -98,11 +78,101 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             font-size: 0.8rem;
-            white-space: nowrap;
+            background: transparent;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
         }
-        .btn-reserve:hover {
-            background: var(--accent-color);
-            color: var(--primary-color);
+        .btn-reserve:hover { background: var(--accent-color); color: var(--primary-color); }
+
+        /* --- 通用弹窗样式 (Modal) --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.85); /* 深色背景 */
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 3rem;
+            border: 1px solid var(--accent-color);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 2100;
+        }
+        .close-btn:hover { color: var(--accent-color); }
+
+        /* --- 菜单画廊特定样式 --- */
+        .gallery-container {
+            position: relative;
+            max-width: 90%;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .menu-image {
+            max-height: 85vh;
+            max-width: 100%;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            border: 2px solid #fff;
+        }
+
+        /* 左右切换箭头 */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -50px;
+            color: white;
+            font-weight: bold;
+            font-size: 30px;
+            transition: 0.3s ease;
+            user-select: none;
+            background-color: rgba(0,0,0,0.3);
+            border-radius: 50%;
+        }
+        .next { right: -60px; }
+        .prev { left: -60px; }
+        .prev:hover, .next:hover { background-color: var(--accent-color); color: var(--primary-color); }
+
+        /* 页码指示器 */
+        .page-indicator {
+            position: absolute;
+            bottom: -40px;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            font-size: 1rem;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .prev { left: 10px; background: rgba(0,0,0,0.6); }
+            .next { right: 10px; background: rgba(0,0,0,0.6); }
         }
 
         /* --- 页面内容 --- */
@@ -117,87 +187,26 @@
             text-align: center;
             color: var(--text-light);
         }
+        .hero-content h1 { font-size: 4rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .hero-content p { font-size: 1.3rem; font-style: italic; letter-spacing: 1px; font-weight: 300; }
 
-        .hero-content h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-        .hero-content p {
-            font-size: 1.3rem;
-            font-style: italic;
-            letter-spacing: 1px;
-            font-weight: 300;
-        }
+        .intro { padding: 5rem 10%; text-align: center; background-color: var(--bg-light); }
+        .intro h2 { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1.5rem; }
+        .divider { width: 60px; height: 3px; background-color: var(--accent-color); margin: 0 auto; }
 
-        .intro {
-            padding: 5rem 10%;
-            text-align: center;
-            background-color: var(--bg-light);
-        }
-        .intro h2 {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-        }
-        .intro p {
-            max-width: 700px;
-            margin: 0 auto 2rem;
-            color: #555;
-            font-size: 1.1rem;
-        }
-        .divider {
-            width: 60px;
-            height: 3px;
-            background-color: var(--accent-color);
-            margin: 0 auto;
-        }
-
-        .grid-section {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            min-height: 550px;
-        }
+        .grid-section { display: grid; grid-template-columns: repeat(2, 1fr); min-height: 550px; }
         .grid-img { background-size: cover; background-position: center; }
-        .grid-text {
-            background-color: #fff;
-            padding: 4rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-        }
-        .grid-text h3 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-        .menu-link {
-            margin-top: 1rem;
-            border-bottom: 1px solid var(--accent-color);
-            padding-bottom: 5px;
-            color: var(--primary-color);
-            font-weight: 700;
-            cursor: pointer;
-        }
+        .grid-text { background-color: #fff; padding: 4rem; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+        .grid-text h3 { font-size: 2rem; margin-bottom: 1rem; color: var(--primary-color); }
+        .menu-link { margin-top: 1rem; border-bottom: 1px solid var(--accent-color); padding-bottom: 5px; color: var(--primary-color); font-weight: 700; cursor: pointer; }
 
-        footer {
-            background-color: var(--primary-color);
-            color: #bbb;
-            padding: 4rem 5%;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            font-size: 0.9rem;
-            border-top: 4px solid var(--accent-color);
-        }
+        footer { background-color: var(--primary-color); color: #bbb; padding: 4rem 5%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; font-size: 0.9rem; border-top: 4px solid var(--accent-color); }
         footer h4 { color: var(--accent-color); margin-bottom: 1.5rem; letter-spacing: 1px; }
 
         @media (max-width: 900px) {
             header { padding: 1rem; flex-direction: column; gap: 1rem; }
             .header-left { flex-direction: column; gap: 1rem; }
             .header-right { width: 100%; justify-content: center; }
-            nav ul { gap: 1rem; flex-wrap: wrap; justify-content: center; }
             .hero-content h1 { font-size: 2.5rem; }
             .grid-section { grid-template-columns: 1fr; }
             footer { grid-template-columns: 1fr; text-align: center; }
@@ -214,7 +223,8 @@
                 <ul>
                     <li><a href="#">Inicio</a></li>
                     <li><a href="#">Concepto</a></li>
-                    <li><a href="#">Carta</a></li>
+                    <!-- 给菜单链接加了 ID -->
+                    <li><a href="#" id="menuBtn">Carta</a></li> 
                     <li><a href="#">Salones</a></li>
                     <li><a href="#">Contacto</a></li>
                 </ul>
@@ -222,20 +232,51 @@
         </div>
         
         <div class="header-right">
-            <!-- 自定义下拉菜单：利用 Cookie 触发翻译 -->
             <select id="custom-lang-selector" class="lang-selector" onchange="translatePage(this.value)">
                 <option value="es">Español</option>
                 <option value="ca">Català</option>
                 <option value="en">English</option>
                 <option value="zh-CN">中文</option>
             </select>
-            <a href="#" class="btn-reserve">Reservar</a>
+            <button class="btn-reserve" id="openReserveBtn">RESERVAR</button>
         </div>
     </header>
 
+    <!-- Google 翻译组件 (隐藏) -->
     <div id="google_translate_element"></div>
 
-    <!-- 首屏 Hero -->
+    <!-- 1. 预订弹窗 (RESERVATION Modal) -->
+    <div id="reservationModal" class="modal">
+        <div class="modal-content" style="position: relative;">
+            <span class="close-btn" style="color: #333; top: 10px; right: 20px; font-size: 28px;">&times;</span>
+            <h2 style="color: var(--primary-color); margin-bottom: 1rem;">Reservas</h2>
+            <div style="width: 50px; height: 2px; background: var(--accent-color); margin: 10px auto;"></div>
+            <p style="margin: 20px 0;">Para garantizar la mejor experiencia, contáctenos:</p>
+            <p style="font-size: 1.2rem; font-weight: bold; color: var(--primary-color);">+34 93 123 45 67</p>
+            <p style="margin-top: 10px;">reservas@panorama.com</p>
+        </div>
+    </div>
+
+    <!-- 2. 菜单画廊弹窗 (MENU GALLERY Modal) -->
+    <div id="menuGalleryModal" class="modal">
+        <span class="close-btn" id="closeGalleryBtn">&times;</span>
+        
+        <div class="gallery-container">
+            <!-- 上一张 -->
+            <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+            
+            <!-- 图片 -->
+            <img id="menuImageDisplay" class="menu-image" src="" alt="Menu Page">
+            
+            <!-- 下一张 -->
+            <a class="next" onclick="changeSlide(1)">&#10095;</a>
+            
+            <!-- 页码 -->
+            <div class="page-indicator" id="pageIndicator">Página 1 / 3</div>
+        </div>
+    </div>
+
+    <!-- 内容区域 -->
     <section class="hero">
         <div class="hero-content">
             <h1>Más Allá del Horizonte</h1>
@@ -243,40 +284,33 @@
         </div>
     </section>
 
-    <!-- 品牌介绍 -->
     <section class="intro">
         <h2>Nuestra Filosofía</h2>
         <div class="divider"></div>
         <br>
-        <p>
-            Ubicado en la cima de la ciudad, PANORAMA no es solo un restaurante, es un viaje de vistas y sabores. 
-            Aquí fusionamos el arte culinario clásico catalán con una perspectiva moderna. 
-            Respetamos la tradición y utilizamos ingredientes locales para ofrecerle una fiesta gastronómica.
-        </p>
+        <p>Ubicado en la cima de la ciudad, PANORAMA no es solo un restaurante, es un viaje de vistas y sabores. </p>
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Latte_art_3.jpg/640px-Latte_art_3.jpg" alt="Signature" style="width: 100px; opacity: 0.6; margin-top:1rem; filter: grayscale(100%);">
     </section>
 
-    <!-- 图文交错展示 1 -->
     <section class="grid-section">
         <div class="grid-img" style="background-image: url('https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');"></div>
         <div class="grid-text">
             <h3>Tradición e Innovación</h3>
-            <p>Nuestra carta se inspira en la riqueza del Mediterráneo. Desde guisos tradicionales a fuego lento hasta mariscos frescos del día. Como el clásico 7 Portes, tenemos nuestro propio recetario de platos ilustres.</p>
-            <a href="#" class="menu-link">Ver la Carta Completa &rarr;</a>
+            <p>Nuestra carta se inspira en la riqueza del Mediterráneo. Desde guisos tradicionales a fuego lento hasta mariscos frescos del día.</p>
+            <!-- 也可以点击这里打开菜单 -->
+            <a href="#" class="menu-link" onclick="openMenuGallery(event)">Ver la Carta Completa &rarr;</a>
         </div>
     </section>
 
-    <!-- 图文交错展示 2 -->
     <section class="grid-section">
         <div class="grid-text" style="background-color: #f9f9f9;">
             <h3>Comedor Panorámico</h3>
-            <p>Ya sea para una cena privada o una reunión de negocios, PANORAMA ofrece no solo privacidad, sino unas vistas inigualables. La historia y el presente se encuentran en cada copa.</p>
-            <a href="#" class="menu-link">Reservar Salón &rarr;</a>
+            <p>Ya sea para una cena privada o una reunión de negocios, PANORAMA ofrece no solo privacidad, sino unas vistas inigualables.</p>
+            <a href="#" class="menu-link">Ver Salones &rarr;</a>
         </div>
         <div class="grid-img" style="background-image: url('https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');"></div>
     </section>
 
-    <!-- 页脚 -->
     <footer>
         <div>
             <h4>PANORAMA</h4>
@@ -286,17 +320,15 @@
             <h4>Contacto</h4>
             <p>Avenida del Mar, 108, Barcelona</p>
             <p>Tel: +34 93 123 45 67</p>
-            <p>Email: info@panorama-rest.com</p>
         </div>
         <div>
             <h4>Horario</h4>
             <p>Almuerzo: 13:00 - 16:00</p>
             <p>Cena: 20:00 - 23:30</p>
-            <p>Abierto todos los días</p>
         </div>
     </footer>
 
-    <!-- Google Translate Script (必须包含) -->
+    <!-- Google Translate Script -->
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
@@ -308,38 +340,90 @@
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-    <!-- 强力 Cookie 翻译脚本 -->
+    <!-- 脚本逻辑 -->
     <script>
+        // --- 1. 翻译逻辑 ---
         function translatePage(targetLang) {
-            // 设置 Google Translate 特定的 cookie
-            // 格式: /来源语言/目标语言
             document.cookie = "googtrans=/es/" + targetLang + "; path=/";
-            
-            // 重新加载页面以应用翻译
             location.reload();
         }
-
-        // 页面加载时，确保下拉菜单显示当前选中的语言
         window.onload = function() {
             var cookies = document.cookie.split(';');
-            var currentLang = 'es'; // 默认
-            
+            var currentLang = 'es';
             for(var i = 0; i < cookies.length; i++) {
                 var c = cookies[i].trim();
                 if (c.indexOf("googtrans=") == 0) {
-                    // 解析 cookie 里的语言代码
                     var val = c.substring("googtrans=".length, c.length);
-                    // 格式通常是 /es/en，我们取最后两个字符
                     var parts = val.split('/');
-                    if(parts.length > 0) {
-                        currentLang = parts[parts.length - 1]; 
-                    }
+                    if(parts.length > 0) currentLang = parts[parts.length - 1]; 
                 }
             }
-            
             var select = document.getElementById("custom-lang-selector");
-            if(select) {
-                select.value = currentLang;
+            if(select) select.value = currentLang;
+        }
+
+        // --- 2. 预订弹窗逻辑 (Reservation Modal) ---
+        var reserveModal = document.getElementById("reservationModal");
+        var reserveBtn = document.getElementById("openReserveBtn");
+        var reserveClose = reserveModal.getElementsByClassName("close-btn")[0];
+
+        reserveBtn.onclick = function() { reserveModal.style.display = "flex"; }
+        reserveClose.onclick = function() { reserveModal.style.display = "none"; }
+
+        // --- 3. 菜单画廊逻辑 (Menu Gallery Logic) ---
+        
+        // 这里放置您的菜单图片链接 (可以换成您真实的图片URL)
+        // 我这里用一些占位图模拟菜单的样子
+        const menuImages = [
+            "https://i.pinimg.com/originals/18/36/5c/18365c6920f3424d14210086c82787c8.jpg", // 模拟第一页
+            "https://i.pinimg.com/originals/60/76/88/607688544c776097d6d1b64e9e07504a.jpg", // 模拟第二页
+            "https://i.pinimg.com/originals/d6/3d/e2/d63de2e9a6894084323b376288339564.jpg"  // 模拟第三页
+        ];
+
+        let currentSlideIndex = 0;
+        const galleryModal = document.getElementById("menuGalleryModal");
+        const menuBtn = document.getElementById("menuBtn");
+        const closeGalleryBtn = document.getElementById("closeGalleryBtn");
+        const imgDisplay = document.getElementById("menuImageDisplay");
+        const pageIndicator = document.getElementById("pageIndicator");
+
+        // 打开菜单画廊函数
+        function openMenuGallery(e) {
+            if(e) e.preventDefault(); // 防止链接跳转
+            currentSlideIndex = 0; // 每次打开都重置为第一页
+            showSlide(currentSlideIndex);
+            galleryModal.style.display = "flex";
+        }
+
+        // 绑定点击事件
+        menuBtn.addEventListener('click', openMenuGallery);
+
+        // 关闭画廊
+        closeGalleryBtn.onclick = function() {
+            galleryModal.style.display = "none";
+        }
+
+        // 切换图片的函数 (-1 是上一张, 1 是下一张)
+        window.changeSlide = function(n) {
+            currentSlideIndex += n;
+            // 循环逻辑：最后一张点下一张回第一张，第一张点上一张去最后一张
+            if (currentSlideIndex >= menuImages.length) { currentSlideIndex = 0; }
+            if (currentSlideIndex < 0) { currentSlideIndex = menuImages.length - 1; }
+            showSlide(currentSlideIndex);
+        }
+
+        function showSlide(index) {
+            imgDisplay.src = menuImages[index];
+            pageIndicator.innerText = "Página " + (index + 1) + " / " + menuImages.length;
+        }
+
+        // --- 4. 点击窗口外部关闭任意弹窗 ---
+        window.onclick = function(event) {
+            if (event.target == reserveModal) {
+                reserveModal.style.display = "none";
+            }
+            if (event.target == galleryModal) {
+                galleryModal.style.display = "none";
             }
         }
     </script>
