@@ -40,7 +40,6 @@
             margin-bottom: 0.5rem;
             font-weight: 700;
             letter-spacing: 5px;
-            /* 确保标题在任何背景下都清晰 */
             text-shadow: 0 4px 15px rgba(0,0,0,0.9);
         }
 
@@ -71,57 +70,42 @@
             font-size: 0.9rem;
             cursor: pointer;
             margin: 10px 5px;
-            background: rgba(0,0,0,0.3); /* 轻微背景增加可读性 */
+            background: rgba(0,0,0,0.3);
         }
         .btn:hover { background-color: var(--accent-gold); color: var(--bg-color); }
         
         .btn-filled { background-color: var(--accent-gold); color: var(--bg-color); }
         .btn-filled:hover { background-color: var(--accent-hover); border-color: var(--accent-hover); }
 
-        /* --- HERO SECTION (已更新：使用 CSS 滤镜美化实景图) --- */
+        /* --- HERO SECTION --- */
         .hero {
             height: 90vh;
-            position: relative; /* 关键：为内部绝对定位元素提供基准 */
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            overflow: hidden; /* 防止图片放大溢出 */
+            overflow: hidden;
             background-color: #000;
         }
 
-        /* 创建伪元素来放图片，这样可以单独给图片加滤镜而不影响文字 */
         .hero::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 0; /* 图片在最底层 */
-            
-            /* 这里引用你的图片 */
+            z-index: 0;
             background-image: url('https://raw.githubusercontent.com/Sherey93/bcnpanorama/main/images/HERO.png');
             background-size: cover;
             background-position: center;
-
-            /* --- 核心美化魔法 --- */
-            /* brightness(0.55): 把白天变晚上 */
-            /* contrast(1.15): 增加质感 */
-            /* sepia(0.25): 增加一点点金色复古感 */
-            /* saturate(0.9): 稍微降低饱和度，更高级 */
             filter: brightness(0.55) contrast(1.15) sepia(0.25) saturate(0.9);
-            
-            /* 缓慢放大的动画效果 */
             transition: transform 10s ease;
         }
 
-        /* 鼠标悬停时图片缓慢放大 */
-        .hero:hover::before {
-            transform: scale(1.05);
-        }
+        .hero:hover::before { transform: scale(1.05); }
 
-        /* 确保文字内容在图片之上 */
         .hero-content {
             position: relative;
-            z-index: 1; /* 内容层级高于图片 */
+            z-index: 1;
             max-width: 800px;
             padding: 20px;
         }
@@ -165,27 +149,46 @@
         }
         .hours-list span { color: var(--accent-gold); }
 
-        /* --- FOOTER --- */
+        /* --- FOOTER (已修改 CSS 以适配二维码) --- */
         footer { background-color: #000; padding: 40px 0; text-align: center; border-top: 1px solid #333; }
-        .social-links { margin-bottom: 20px; }
-        .social-links a { margin: 0 10px; font-weight: bold; }
-        .social-links a:hover { color: var(--accent-gold); }
+        
+        .social-links { 
+            margin-bottom: 20px; 
+            display: flex; /* 使用 Flexbox 居中对齐 */
+            flex-direction: column; /* 垂直排列：上面二维码，下面邮箱 */
+            align-items: center;
+            gap: 15px;
+        }
 
-        /* --- MOBILE RESPONSIVE (关键修改区) --- */
+        /* 专门控制二维码图片的样式 */
+        .insta-qr {
+            width: 100px; /* 设置二维码宽度 */
+            height: 100px;
+            background-color: #fff; /* 给二维码加个白底，防止黑色背景下无法识别 */
+            padding: 5px; /* 白边宽度 */
+            border-radius: 8px; /* 轻微圆角 */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* 鼠标悬停时放大并发光 */
+        .insta-qr:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--accent-gold);
+        }
+
+        .email-link { 
+            font-weight: bold; 
+            margin-top: 10px;
+            font-size: 1.1rem;
+        }
+        .email-link:hover { color: var(--accent-gold); }
+
+        /* --- MOBILE RESPONSIVE --- */
         @media (max-width: 768px) {
             h1 { font-size: 2.2rem; }
             .info-grid { grid-template-columns: 1fr; }
-            
-            /* 手机端首图高度改小，以显示更多图片宽度 */
-            .hero { 
-                height: 60vh; 
-                min-height: 400px;
-            }
-            /* 确保背景居中 */
-            .hero::before {
-                background-position: center center;
-            }
-            
+            .hero { height: 60vh; min-height: 400px; }
+            .hero::before { background-position: center center; }
             section { padding: 40px 0; }
         }
     </style>
@@ -194,7 +197,6 @@
 
     <!-- HERO SECTION -->
     <header class="hero">
-        <!-- 这里的背景图现在由 CSS 的 .hero::before 控制 -->
         <div class="hero-content container">
             <h1>PANORAMA</h1>
             <h3>Cocktails • Tapas • Lounge</h3>
@@ -245,7 +247,6 @@
         <div class="container">
             <div style="text-align: center;"><h2>Atmosphere</h2></div>
             <div class="gallery-grid">
-                <!-- 请确保你有这些图片，或者删除这些div -->
                 <div class="gallery-img"><img src="images/photo1.jpg" alt="Interior"></div>
                 <div class="gallery-img"><img src="images/photo2.jpg" alt="Cocktail"></div>
                 <div class="gallery-img"><img src="images/photo3.jpg" alt="Tapas"></div>
@@ -277,12 +278,21 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- FOOTER (重点修改区域) -->
     <footer id="contact">
         <div class="container">
             <div class="social-links">
-                <a href="https://instagram.com/panoramabcn" target="_blank">Instagram</a>
-                <a href="mailto:info@panoramabcn.com">Email Us</a>
+                <!-- 
+                    1. 这是一个指向 Instagram 的链接。
+                    2. 内部的 <img> 是二维码。
+                    3. 请将 src="..." 替换为你真实的二维码图片路径 (例如: images/insta-qr.png)
+                -->
+                <a href="https://www.instagram.com/panorama84barcelona?igsh=NXN5dHZ5Y2M4dDIx" target="_blank" title="Follow us on Instagram">
+                    <!-- 这里的 src 使用了一个临时的二维码生成服务作为演示，请换成你自己的图片 -->
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.instagram.com/panorama84barcelona" alt="Instagram QR Code" class="insta-qr">
+                </a>
+
+                <a href="mailto:panorama84brunch@gmail.com" class="email-link">Email Us</a>
             </div>
             <p>&copy; 2025 PANORAMA Bar Barcelona.</p>
         </div>
@@ -290,8 +300,3 @@
 
 </body>
 </html>
-
-
-
-
-
