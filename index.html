@@ -134,11 +134,52 @@
         .menu-item h4 { color: var(--text-main); font-size: 1.2rem; margin-bottom: 10px; }
         .menu-cta { text-align: center; margin-top: 40px; }
 
-        /* --- GALLERY --- */
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
-        .gallery-img { width: 100%; height: 250px; background-color: #333; overflow: hidden; }
-        .gallery-img img { width: 100%; height: 100%; transition: transform 0.5s ease; }
-        .gallery-img:hover img { transform: scale(1.05); }
+        /* --- GALLERY GRID (Updated for Interaction) --- */
+        .gallery-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 15px; 
+        }
+        .gallery-img { 
+            position: relative;
+            width: 100%; 
+            height: 250px; 
+            background-color: #333; 
+            overflow: hidden; 
+            cursor: pointer; /* 鼠标变成手指，提示可点击 */
+            border-radius: 4px;
+        }
+        .gallery-img img { 
+            width: 100%; 
+            height: 100%; 
+            transition: transform 0.5s ease, opacity 0.3s ease; 
+            opacity: 1;
+        }
+        
+        /* 悬停时稍微放大 */
+        .gallery-img:hover img { 
+            transform: scale(1.05); 
+            opacity: 0.8; /* 稍微变暗提示交互 */
+        }
+
+        /* 添加一个点击提示图标 */
+        .gallery-img::after {
+            content: 'Tap to change';
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            color: #fff;
+            font-size: 0.7rem;
+            background: rgba(0,0,0,0.6);
+            padding: 4px 8px;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .gallery-img:hover::after {
+            opacity: 1;
+        }
 
         /* --- LOCATION --- */
         .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
@@ -149,38 +190,18 @@
         }
         .hours-list span { color: var(--accent-gold); }
 
-        /* --- FOOTER (已修改 CSS 以适配二维码) --- */
+        /* --- FOOTER --- */
         footer { background-color: #000; padding: 40px 0; text-align: center; border-top: 1px solid #333; }
-        
         .social-links { 
             margin-bottom: 20px; 
-            display: flex; /* 使用 Flexbox 居中对齐 */
-            flex-direction: column; /* 垂直排列：上面二维码，下面邮箱 */
-            align-items: center;
-            gap: 15px;
+            display: flex; flex-direction: column; align-items: center; gap: 15px;
         }
-
-        /* 专门控制二维码图片的样式 */
         .insta-qr {
-            width: 100px; /* 设置二维码宽度 */
-            height: 100px;
-            background-color: #fff; /* 给二维码加个白底，防止黑色背景下无法识别 */
-            padding: 5px; /* 白边宽度 */
-            border-radius: 8px; /* 轻微圆角 */
+            width: 100px; height: 100px; background-color: #fff; padding: 5px; border-radius: 8px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
-        /* 鼠标悬停时放大并发光 */
-        .insta-qr:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 15px var(--accent-gold);
-        }
-
-        .email-link { 
-            font-weight: bold; 
-            margin-top: 10px;
-            font-size: 1.1rem;
-        }
+        .insta-qr:hover { transform: scale(1.1); box-shadow: 0 0 15px var(--accent-gold); }
+        .email-link { font-weight: bold; margin-top: 10px; font-size: 1.1rem; }
         .email-link:hover { color: var(--accent-gold); }
 
         /* --- MOBILE RESPONSIVE --- */
@@ -242,16 +263,34 @@
         </div>
     </section>
 
-    <!-- GALLERY SECTION -->
+    <!-- GALLERY SECTION (4个独立点击窗口) -->
     <section id="gallery">
         <div class="container">
             <div style="text-align: center;"><h2>Atmosphere</h2></div>
             <div class="gallery-grid">
-                <div class="gallery-img"><img src="images/photo1.jpg" alt="Interior"></div>
-                <div class="gallery-img"><img src="images/photo2.jpg" alt="Cocktail"></div>
-                <div class="gallery-img"><img src="images/photo3.jpg" alt="Tapas"></div>
-                <div class="gallery-img"><img src="images/photo4.jpg" alt="Vibe"></div>
+                
+                <!-- 窗口 1 -->
+                <div class="gallery-img" onclick="changeImage(0)">
+                    <img id="img-0" src="images/photo1.jpg" alt="Interior">
+                </div>
+                
+                <!-- 窗口 2 -->
+                <div class="gallery-img" onclick="changeImage(1)">
+                    <img id="img-1" src="images/photo2.jpg" alt="Cocktail">
+                </div>
+                
+                <!-- 窗口 3 -->
+                <div class="gallery-img" onclick="changeImage(2)">
+                    <img id="img-2" src="images/photo3.jpg" alt="Tapas">
+                </div>
+                
+                <!-- 窗口 4 -->
+                <div class="gallery-img" onclick="changeImage(3)">
+                    <img id="img-3" src="images/photo4.jpg" alt="Vibe">
+                </div>
+
             </div>
+            <p style="text-align:center; color:#666; font-size:0.85rem; margin-top:10px;">(Click any image to see more)</p>
         </div>
     </section>
 
@@ -278,26 +317,85 @@
         </div>
     </section>
 
-    <!-- FOOTER (重点修改区域) -->
+    <!-- FOOTER -->
     <footer id="contact">
         <div class="container">
             <div class="social-links">
-                <!-- 
-                    1. 这是一个指向 Instagram 的链接。
-                    2. 内部的 <img> 是二维码。
-                    3. 请将 src="..." 替换为你真实的二维码图片路径 (例如: images/insta-qr.png)
-                -->
                 <a href="https://www.instagram.com/panorama84barcelona?igsh=NXN5dHZ5Y2M4dDIx" target="_blank" title="Follow us on Instagram">
-                    <!-- 这里的 src 使用了一个临时的二维码生成服务作为演示，请换成你自己的图片 -->
                     <img src="https://raw.githubusercontent.com/Sherey93/bcnpanorama/main/images/QRINSTAGRAM.jpg" alt="Instagram QR Code" class="insta-qr">
                 </a>
-
                 <a href="mailto:panorama84brunch@gmail.com" class="email-link">Email Us</a>
             </div>
             <p>&copy; 2025 PANORAMA Bar Barcelona.</p>
         </div>
     </footer>
 
+    <!-- JAVASCRIPT: 控制4个窗口独立切换 -->
+    <script>
+        // --- 图片配置区 ---
+        // 这里有4个数组，分别对应4个窗口（0, 1, 2, 3）。
+        // 请在每个数组里填入你想轮换的图片路径。
+        
+        const galleryData = {
+            0: [ // 第1个窗口的图片列表
+                'images/photo1.jpg',
+                'images/interior-2.jpg',
+                'images/interior-3.jpg'
+            ],
+            1: [ // 第2个窗口的图片列表
+                'images/photo2.jpg',
+                'images/cocktail-2.jpg',
+                'images/cocktail-3.jpg'
+            ],
+            2: [ // 第3个窗口的图片列表
+                'images/photo3.jpg',
+                'images/food-2.jpg',
+                'images/food-3.jpg'
+            ],
+            3: [ // 第4个窗口的图片列表
+                'images/photo4.jpg',
+                'images/vibe-2.jpg',
+                'images/vibe-3.jpg'
+            ]
+        };
+
+        // 记录每个窗口当前显示到了第几张
+        let currentIndices = {0: 0, 1: 0, 2: 0, 3: 0};
+
+        function changeImage(slotId) {
+            // 1. 获取该窗口的图片列表
+            const images = galleryData[slotId];
+            
+            // 2. 索引加 1
+            currentIndices[slotId]++;
+            
+            // 3. 如果超过了图片总数，回到第 0 张
+            if (currentIndices[slotId] >= images.length) {
+                currentIndices[slotId] = 0;
+            }
+
+            // 4. 获取对应的 <img> 标签
+            const imgElement = document.getElementById('img-' + slotId);
+            
+            // 5. 简单的透明度动画
+            imgElement.style.opacity = 0.5; // 先变淡
+            
+            setTimeout(() => {
+                // 切换图片路径
+                imgElement.src = images[currentIndices[slotId]];
+                
+                // 这里加个错误处理：如果图片文件不存在，在控制台报错，但不崩坏页面
+                imgElement.onerror = function() {
+                    console.log("Image not found: " + imgElement.src);
+                    // 也可以在这里放一个备用图链接
+                };
+
+                imgElement.onload = () => {
+                    imgElement.style.opacity = 1; // 加载好后变回不透明
+                };
+            }, 150);
+        }
+    </script>
+
 </body>
 </html>
-
